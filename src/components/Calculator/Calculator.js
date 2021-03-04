@@ -1,18 +1,88 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-//import mapStoreToProps from '../../redux/mapStoreToProps';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import "./Calculator.css";
 
-// Basic functional component structure for React with default state
-// value setup. When making a new component be sure to replace the
-// component name TemplateFunction with the name for the new component.
 function Calculator(props) {
-  // Using hooks we're creating local state for a "heading" variable with
-  // a default value of 'Functional Component'
-  const [heading, setHeading] = useState('Calculator Heading');
-
   return (
     <div>
-      <h2>{heading}</h2>
+      <div className="calcBody">
+        <div className="screen"></div>
+
+        <table className="calcTable">
+          <tbody className="calcButtons">
+            <tr>
+              <td>
+                <button>AC</button>
+              </td>
+              <td>
+                <button>+/-</button>
+              </td>
+              <td>
+                <button>%</button>
+              </td>
+              <td>
+                <button>/</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button>7</button>
+              </td>
+              <td>
+                <button>8</button>
+              </td>
+              <td>
+                <button>9</button>
+              </td>
+              <td>
+                <button>X</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button>4</button>
+              </td>
+              <td>
+                <button>5</button>
+              </td>
+              <td>
+                <button>6</button>
+              </td>
+              <td>
+                <button>-</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button>1</button>
+              </td>
+              <td>
+                <button>2</button>
+              </td>
+              <td>
+                <button>3</button>
+              </td>
+              <td>
+                <button>+</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button>0</button>
+              </td>
+              <td>
+                <button>Party</button>
+              </td>
+              <td>
+                <button>.</button>
+              </td>
+              <td>
+                <button>=</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

@@ -7,8 +7,8 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
-const equationsRouter = require('./routes/equations.router');
-app.use('/api/equations', equationsRouter);
+const calculationsRouter = require('./routes/calculations.router');
+app.use('/api/equations', calculationsRouter);
 
 io.on("connection", (socket) => {
   console.log("new user has connected");

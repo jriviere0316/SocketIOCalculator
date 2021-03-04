@@ -1,0 +1,38 @@
+body {
+  background-color: rgb(54, 56, 58);
+  color: white;
+}
+.calcBody {
+  border-radius: 5px;
+  padding: 30px;
+  background-color: black;
+  width: 230px;
+  justify-content: center;
+  margin: auto;
+}
+.calcButtons {
+  width: 180px;
+  height: 50px;
+}
+.calcTable {
+  justify-content: center;
+  margin: auto;
+}
+button {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: 2px;
+}
+button:hover {
+  background-color: chartreuse;
+}
+.screen {
+  background-color: chartreuse;
+  margin: auto;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  width: 220px;
+  height: 50px;
+  display: inline-flex;
+}

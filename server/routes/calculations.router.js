@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const router = express.Router();
 
-router.get('/:tacos', (req, res) => {
+router.get('/', (req, res) => {
     res.send('Hello World'); 
 
     });
