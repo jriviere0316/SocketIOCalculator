@@ -3,7 +3,7 @@ import Calculator from '../Calculator/Calculator'
 function App() {
   return (
     <div className="App">
-      <h1> socket io party calculator</h1>
+      <h1> SOCKET.IO PARTY CALCULATOR</h1>
       <Calculator/>
     </div>
   );
