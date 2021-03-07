@@ -41,7 +41,9 @@ You should now have a newly created table with the name 'calculations' in the le
 Open this repo in the IDE of your choice, then in the project directory run these commands in the following order:
 
 npm install (wait for installation to complete)
+
 npm run server
+
 npm run client
 
 
