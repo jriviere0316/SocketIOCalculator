@@ -11,6 +11,7 @@ socket.on("message", (message) => {
 
 function Calculator(props) {
   const [equation, setEquation] = useState("");
+  const [isParty, setIsParty] = useState(false);
 
   useEffect(() => {
     props.dispatch({
@@ -18,8 +19,7 @@ function Calculator(props) {
     });
   }, []);
 
-  socket.on("socketEquation", (equation, props) => {
-    console.log("new equation detected on server:", equation);
+  socket.on("socketEquation", () => {
     getEquations();
   });
 
@@ -58,6 +58,7 @@ function Calculator(props) {
   };
 
   const partyMode = () => {
+    setIsParty(!isParty);
     const audioEl = document.getElementsByClassName("audio-element")[0];
     if (audioEl.paused) {
       audioEl.play();
@@ -65,14 +66,40 @@ function Calculator(props) {
       audioEl.pause();
     }
   };
+
+  if (isParty === true) {
+    document.body.style.animation = "partyColors infinite 2s linear";
+  } else if (isParty === false) {
+    document.body.style.animation = "";
+  }
+
   return (
-    <div>
+    <div className="calcContainer">
+      {isParty === true ? (
+        <>
+          <img
+            className="partyLogo left"
+            alt="logo"
+            src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_7a49b25a78d1a50285a6a37789b87072/sezzle.png"
+          ></img>
+          <img
+            className="partyLogo right"
+            alt="logo"
+            src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_7a49b25a78d1a50285a6a37789b87072/sezzle.png"
+          ></img>
+        </>
+      ) : (
+        <></>
+      )}
+
       <audio className="audio-element">
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></source>
       </audio>
 
       <div className="calcBody">
-        <div className="screen">{equation}</div>
+        <div className="screen">
+          <h1 className="screenText">{equation}</h1>
+        </div>
 
         <table className="calcTable">
           <tbody className="calcButtons">
@@ -186,7 +213,7 @@ function Calculator(props) {
         <thead>
           <tr>
             <td>
-              <h1>PREVIOUS 10 CALCULATIONS</h1>
+              <h2>PREVIOUS 10 CALCULATIONS</h2>
             </td>
           </tr>
         </thead>
@@ -201,7 +228,9 @@ function Calculator(props) {
     </div>
   );
 }
+
 const mapStateToProps = (reduxStore) => ({
   reduxStore,
 });
+
 export default connect(mapStateToProps)(Calculator);

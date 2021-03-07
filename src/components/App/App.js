@@ -3,7 +3,7 @@ import Calculator from '../Calculator/Calculator'
 function App() {
   return (
     <div className="App">
-      <h1> SOCKET.IO PARTY CALCULATOR</h1>
+      <h2> SOCKET.IO PARTY CALCULATOR</h2>
       <Calculator/>
     </div>
   );

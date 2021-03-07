@@ -1,8 +1,8 @@
 body {
   background-color: rgb(54, 56, 58);
   color: white;
+  animation: "";
 }
-
 .calcBody {
   border-radius: 5px;
   padding: 30px;
@@ -38,7 +38,52 @@ button:hover {
   height: 50px;
   display: inline-flex;
 }
+.screenText{
+    margin: auto;
+}
+.centered {
+  margin: auto;
+}
+.partyLogo {
+  display: inline-flex;
+  position: relative;
+  z-index: -2;
+  transform: rotate(360deg);
+  animation: Party-mode infinite 4s linear;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
 
-.centered{
-    margin:auto;
+@keyframes Party-mode {
+  0% {
+    transform: rotate(0deg) scale(0.5);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.5);
+  }
+  100% {
+    transform: rotate(360deg) scale(0.5);
+  }
+}
+
+@keyframes partyColors {
+  0% {
+    background: #45c69d;
+  }
+  25% {
+    background: #a362dc;
+  }
+  50% {
+    background: #da4949;
+  }
+  75% {
+    background: #ee962a;
+  }
+  100% {
+    background: #45c69d;
+  }
 }
