@@ -9,7 +9,6 @@ const stringMath = require('string-math');
 
 
 router.get("/", (req, res) => {
-    console.log('in GET equations');
     const query = `SELECT * FROM "calculations" ORDER BY "id" DESC LIMIT 10;`;
     pool.query(query)
     .then(results => {
@@ -23,11 +22,8 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
     // console.log(Object.keys(req));
     const equation = req.body.payload
-    console.log(equation);
     const equationResult = stringMath(req.body.payload) 
-    console.log('equationResult', equationResult);
     const fullEquation = equation+'='+equationResult;
-    console.log('fullEquation', fullEquation);
     const queryText = `INSERT INTO "calculations"
     ("fullEquation")
     VALUES ($1)

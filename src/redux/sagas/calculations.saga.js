@@ -15,7 +15,6 @@ function* sendEquation(action) {
 }
 
 function* getEquations(action) {
-  console.log("in getEquations");
   const response = yield axios({
     method: "GET",
     url: "/api/calculator",

@@ -2,12 +2,32 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import "./Calculator.css";
 
+const io = require("socket.io-client");
+const socket = io();
+
+socket.on("message", (message) => {
+  console.log(message);
+});
+
 function Calculator(props) {
   const [equation, setEquation] = useState("");
-  const [previousEquations, setPreviousEquations] = useState([]);
 
+  useEffect(() => {
+    props.dispatch({
+      type: "GET_EQUATIONS",
+    });
+  }, []);
 
+  socket.on("socketEquation", (equation, props) => {
+    console.log("new equation detected on server:", equation);
+    getEquations();
+  });
 
+  const getEquations = () => {
+    props.dispatch({
+      type: "GET_EQUATIONS",
+    });
+  };
 
   const handleChange = (event) => {
     setEquation(equation + event.target.value);
@@ -19,7 +39,7 @@ function Calculator(props) {
 
   const invertNumber = () => {
     const invertedNumber = Number(equation) * Number(-1);
-    setEquation(invertedNumber)
+    setEquation(invertedNumber);
   };
 
   const calculatePercentage = () => {
@@ -27,7 +47,9 @@ function Calculator(props) {
     setEquation(percentage);
   };
 
-  const submitEquation = (event) => {
+  const submitEquation = () => {
+    socket.emit("add_equation", equation);
+
     props.dispatch({
       type: "SEND_EQUATION",
       payload: equation,
@@ -65,7 +87,7 @@ function Calculator(props) {
                 <button onClick={(value) => calculatePercentage()}>%</button>
               </td>
               <td>
-                <button value="%" onClick={(value) => handleChange(value)}>
+                <button value="/" onClick={(value) => handleChange(value)}>
                   /
                 </button>
               </td>
@@ -143,7 +165,7 @@ function Calculator(props) {
                 </button>
               </td>
               <td>
-                <button onClick={() => partyMode()}>Party</button>
+                <button onClick={() => partyMode()}>Party Mode</button>
               </td>
               <td>
                 <button value="." onClick={(value) => handleChange(value)}>
@@ -164,14 +186,22 @@ function Calculator(props) {
         <thead>
           <tr>
             <td>
-              <h1>PREVIOUS CALCULATIONS</h1>
+              <h1>PREVIOUS 10 CALCULATIONS</h1>
             </td>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {props.reduxStore.calculations.map((calculation) => (
+            <tr key={calculation.id}>
+              <td>{calculation.fullEquation}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
 }
-
-export default connect()(Calculator);
+const mapStateToProps = (reduxStore) => ({
+  reduxStore,
+});
+export default connect(mapStateToProps)(Calculator);
