@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# ABOUT
+
+A deployed version of this application can be found at:
+https://dry-ocean-85067.herokuapp.com/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+This app uses PostgreSQL, Express, React.js, Redux, Socket.io, and a full list of included dependencies can be found in the package.json
 
-In the project directory, you can run:
+## To run this application locally:
 
-### `yarn start`
+## Download and install Postico
+https://eggerapps.at/postico/
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open Postico 
+Click 'New Favorite'
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Set Host to: localhost
+Set port to: 5432
+Set User to: your preferred username
 
-### `yarn test`
+Clicking 'Connect' should bring to a different saying "localhost" "connected"
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Click the '+ Database' button on the bottom left and set the name to 'SocketIOCalc'
 
-### `yarn build`
+If you want to name this new database something else you will have to match line 26 in server/modules/pool.js to your preferred db name.  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Double click on the 'SocketIOCalc' database to open it.  Once openend, double click on 'SQL Query', and paste in the the following SQL command:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+CREATE TABLE "calculations" (
+    "id" SERIAL PRIMARY KEY,
+    "fullEquation" VARCHAR (1000)
+);
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Click 'Execute Selection', and then refresh the page either by clicking the refresh button or pressing 'command + r'
 
-### `yarn eject`
+You should now have a newly created table with the name 'calculations' in the left side menu
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Starting up the client and server
+Open this repo in the IDE of your choice, then in the project directory run these commands in the following order:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+npm install (wait for installation to complete)
+npm run server
+npm run client
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+# Operation
+Open two different web brosers (chrome, safari) and navigate to http://localhost:3000/ in both
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Clicking 'x+y=' on one client dispatches an unsolved equation to be calculated on the server and stored in the postico db through redux, while also emitting a socket.io message 'add_equation'
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The server listens for all 'add_equation' messages, and emits a new message named 'socketEquation' to all connected clients 
 
-### Code Splitting
+All connected clients then dispatch a get request to the postico db to for a live view of incoming equations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Click 'Party Mode' to spice up your experience and celebrate your succesful calculations! (caution, party music is loud!)
