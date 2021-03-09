@@ -17,7 +17,14 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const equation = req.body.payload;
-    const equationResult = stringMath(req.body.payload);
+    //9/0
+    
+    var equationResult = stringMath(req.body.payload);
+    if (equationResult === undefined) {
+     equationResult = 0  
+     console.log('equation result was undefined, new result should be 0:', equationResult);
+    }
+
     const fullEquation = equation + "=" + equationResult;
     const queryText = `INSERT INTO "calculations"
         ("fullEquation")

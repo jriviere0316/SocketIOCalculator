@@ -19,9 +19,9 @@ Set Host to: localhost
 Set port to: 5432
 Set User to: your preferred username
 
-Clicking 'Connect' should bring to a different saying "localhost" "connected"
+Clicking 'Connect' should redirect to a screen saying "localhost" "connected" 
 
-Click the '+ Database' button on the bottom left and set the name to 'SocketIOCalc'
+Click the '+ Database' button on the bottom left of this screen and set the new db name to 'SocketIOCalc'
 
 If you want to name this new database something else you will have to match line 26 in server/modules/pool.js to your preferred db name.  
 

@@ -18,10 +18,10 @@ app.use("/api/calculator", calculatorRouter);
 app.use(express.static("build"));
 
 io.on("connection", (socket) => {
-  io.emit('message', 'A user has connected');
+  // io.emit('message', 'A user has connected');
 
   socket.on("disconnect", () => {
-    io.emit('message', 'A user has disconnected');
+    // io.emit('message', 'A user has disconnected');
   });
 
   socket.on('add_equation', (equation) => { 

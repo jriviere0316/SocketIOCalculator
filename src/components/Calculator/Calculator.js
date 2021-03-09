@@ -11,13 +11,19 @@ socket.on("message", (message) => {
 
 function Calculator(props) {
   const [equation, setEquation] = useState("");
-  const [isParty, setIsParty] = useState(false);
+  const [result, setResult] = useState("");
+  const [isParty, setIsParty] = useState("");
+  const [isHidden, setIsHidden] = useState("screenText hidden");
 
   useEffect(() => {
     props.dispatch({
       type: "GET_EQUATIONS",
     });
   }, []);
+
+  useEffect(() => {
+    getRecentResult();
+  });
 
   socket.on("socketEquation", () => {
     getEquations();
@@ -31,15 +37,12 @@ function Calculator(props) {
 
   const handleChange = (event) => {
     setEquation(equation + event.target.value);
+    setIsHidden('screenText');
   };
 
   const clearScreen = () => {
     setEquation("");
-  };
-
-  const invertNumber = () => {
-    const invertedNumber = Number(equation) * Number(-1);
-    setEquation(invertedNumber);
+    setIsHidden("screenText hidden");
   };
 
   const calculatePercentage = () => {
@@ -49,7 +52,6 @@ function Calculator(props) {
 
   const submitEquation = () => {
     socket.emit("add_equation", equation);
-
     props.dispatch({
       type: "SEND_EQUATION",
       payload: equation,
@@ -67,9 +69,17 @@ function Calculator(props) {
     }
   };
 
+  const getRecentResult = () => {
+    const recentItem = props.reduxStore.calculations[0];
+    if (recentItem !== undefined) {
+      let result = recentItem.fullEquation.split("=")[1];
+      setResult(result);
+    }
+  };
+
   if (isParty === true) {
     document.body.style.animation = "partyColors infinite 2s linear";
-  } else if (isParty === false) {
+  } else {
     document.body.style.animation = "";
   }
 
@@ -98,7 +108,15 @@ function Calculator(props) {
 
       <div className="calcBody">
         <div className="screen">
-          <h1 className="screenText">{equation}</h1>
+          {equation === "" ? (
+            <h1 id="result" className={isHidden}>
+              {result}
+            </h1>
+          ) : (
+            <h1 id="equation" className={isHidden}>
+              {equation}
+            </h1>
+          )}
         </div>
 
         <table className="calcTable">
@@ -108,7 +126,9 @@ function Calculator(props) {
                 <button onClick={() => clearScreen()}>AC</button>
               </td>
               <td>
-                <button onClick={() => invertNumber()}>+/-</button>
+                <button value="-" onClick={(value) => handleChange(value)}>
+                  +/-
+                </button>
               </td>
               <td>
                 <button onClick={(value) => calculatePercentage()}>%</button>
