@@ -4,14 +4,20 @@ import { put, takeLatest } from "redux-saga/effects";
 function* sendEquation(action) {
   const equation = action.payload;
   console.log(equation);
-  yield axios({
-    method: "POST",
-    url: "/api/calculator",
-    data: action,
-  });
-  yield put({
-    type: "GET_EQUATIONS",
-  });
+
+  try {
+    yield axios({
+      method: "POST",
+      url: "/api/calculator",
+      data: action,
+    });
+    yield put({
+      type: "GET_EQUATIONS",
+    });
+  } catch (err) {
+    console.log('error', err);
+  }
+  
 }
 
 function* getEquations(action) {
