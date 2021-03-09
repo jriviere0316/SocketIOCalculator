@@ -76,18 +76,18 @@ function Calculator(props) {
   return (
     <div className="calcContainer">
       {isParty === true ? (
-        <>
+        <div className="logo-container">
           <img
-            className="partyLogo left"
+            className="partyLogo"
             alt="logo"
             src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_7a49b25a78d1a50285a6a37789b87072/sezzle.png"
           ></img>
           <img
-            className="partyLogo right"
+            className="partyLogo"
             alt="logo"
             src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_7a49b25a78d1a50285a6a37789b87072/sezzle.png"
           ></img>
-        </>
+        </div>
       ) : (
         <></>
       )}
