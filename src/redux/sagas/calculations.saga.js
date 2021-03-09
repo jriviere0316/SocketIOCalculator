@@ -2,9 +2,6 @@ import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
 
 function* sendEquation(action) {
-  const equation = action.payload;
-  console.log(equation);
-
   try {
     yield axios({
       method: "POST",
@@ -15,9 +12,8 @@ function* sendEquation(action) {
       type: "GET_EQUATIONS",
     });
   } catch (err) {
-    console.log('error', err);
+    console.log("error", err);
   }
-  
 }
 
 function* getEquations(action) {
@@ -26,7 +22,6 @@ function* getEquations(action) {
     url: "/api/calculator",
   });
 
-  //console.log("back from GET equations with:", response.data);
   yield put({ type: "SET_EQUATIONS", payload: response.data });
 }
 
